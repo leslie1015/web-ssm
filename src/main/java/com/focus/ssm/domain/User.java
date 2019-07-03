@@ -1,7 +1,7 @@
 package com.focus.ssm.domain;
 
 /**
- * Created by wangyong1015 on 2017/7/24.
+ * Created by  on 2017/7/24.
  */
 public class User {
 

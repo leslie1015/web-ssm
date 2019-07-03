@@ -10,20 +10,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 
 /**
- * Created by wangyong1015 on 2017/7/24.
+ * Created by  on 2017/7/24.
  */
 @Controller
-
+@RequestMapping("/user")
 public class UserController {
-
     @Resource
     private UserService userService;
 
     @RequestMapping(value="/showUser",method = RequestMethod.GET)
     public String getIndex(Model model,int userId){
-        //ModelAndView mav = new ModelAndView("index");
         User user = userService.selectUserById(userId);
-        //mav.addObject("user", user);
         model.addAttribute("user",user);
         return "index";
     }
