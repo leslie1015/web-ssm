@@ -69,8 +69,8 @@ public class AutoGeneratorTool {
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
         //模板引擎是freemarker
-        String ftlTemplatePath  = "/templates/mapper.xml.ftl";
-        String vmTemplatePath  = "/templates/mapper.xml.vm";
+        String ftlTemplatePath  = "/code_templates/mapper.xml.ftl";
+        String vmTemplatePath  = "/code_templates/mapper.xml.vm";
 
         focList.add(new FileOutConfig(vmTemplatePath) {
             @Override
