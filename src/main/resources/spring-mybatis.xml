@@ -10,7 +10,7 @@
                         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 自动扫描 -->
-    <context:component-scan base-package="com.focus.ssm"/>
+    <context:component-scan base-package="com.focus.cms"/>
 
     <!-- 第一种方式：加载一个properties文件 -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -70,7 +70,7 @@
 
     <!-- Mapper接口所在包名，Spring会自动查找其下的类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.focus.ssm.dao"/>
+        <property name="basePackage" value="com.focus.cms.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 

@@ -1,4 +1,4 @@
-package com.focus.ssm;
+package com.focus.cms;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +54,8 @@ public class AutoGeneratorTool {
 
         // 包配置
         final PackageConfig pc = new PackageConfig();
-        pc.setParent("com.focus.ssm"); // [实体类所在模块的父模块名]
-        pc.setModuleName("domain"); // [实体类所在模块名]
+        pc.setParent("com.focus"); // [实体类所在模块的父模块名]
+        pc.setModuleName("cms"); // [实体类所在模块名]
         pc.setXml("mapper"); // 默认包名：mapper.xml
         mpg.setPackageInfo(pc);
 
@@ -66,16 +66,22 @@ public class AutoGeneratorTool {
                 // to do nothing
             }
         };
+        // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
-        focList.add(new FileOutConfig("/templates/mapper.xml.ftl") {
+        //模板引擎是freemarker
+        String ftlTemplatePath  = "/templates/mapper.xml.ftl";
+        String vmTemplatePath  = "/templates/mapper.xml.vm";
+
+        focList.add(new FileOutConfig(vmTemplatePath) {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义mapper文件名称
-                return projectPath + "/src/main/resources/mapper/" + pc.getModuleName() + "/"
+                return projectPath + "/src/main/resources/mapping/"
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
 
         });
+
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
         mpg.setTemplate(new TemplateConfig().setXml(null));
@@ -84,14 +90,19 @@ public class AutoGeneratorTool {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel); // 下划线转驼峰命名
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+
+//        strategy.setSuperEntityClass("");
+        strategy.setRestControllerStyle(true);
+
         strategy.setEntityLombokModel(true);
-        strategy.setInclude("student"); // [表名]
-        strategy.setSuperEntityColumns("id");
+        //strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        strategy.setInclude("basic_parameter"); // [表名]
+//        strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
         // strategy.setTablePrefix(pc.getModuleName() + "_"); // 数据库表名前缀
         mpg.setStrategy(strategy);
         // 选择 freemarker 引擎需要指定如下加，注意 pom 依赖必须有！
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+//        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
     }
 }

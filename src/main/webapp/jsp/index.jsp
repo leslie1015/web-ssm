@@ -11,10 +11,10 @@
 
 <div class="row">
   <div class="col-3">
-   用户名： ${user.userName}<br>
+   key： ${parameter.paramKey}<br>
   </div>
  <div class="col-3">
-  密码：${user.userPassword}<br>
+  value：${parameter.paramValue}<br>
  </div>
 </div>
 

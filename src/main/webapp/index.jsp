@@ -7,7 +7,7 @@
     <script type="text/javascript" src="/js/index.js"></script>
 </head>
 <body>
-<div>66894682</div>
+<div>首页</div>
 <button type="button" class="btn btn-primary">666</button>
 
 
