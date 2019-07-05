@@ -30,4 +30,5 @@
       from basic_parameter where id = #{id, jdbcType=DECIMAL}
     </select>
 
+
 </mapper>

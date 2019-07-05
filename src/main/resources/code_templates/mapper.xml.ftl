@@ -36,4 +36,22 @@
         </sql>
 
     </#if>
+
+
+  <sql id="cond">
+    <where>
+      <if test="id != null">
+        and ID = ${r'#{id,jdbcType=VARCHAR}'}
+      </if>
+<#list propertiesList as p><#if p.column== "ID"><#elseif p.jdbcType=="VARCHAR">
+            <if test="${p.property} != null and ${p.property} != ''">
+              and  ${p.column} =${r'#{'}${p.property},jdbcType=${p.jdbcType}}
+            </if>
+<#else>
+            <if test="${p.property} != null">
+              and  ${p.column} =${r'#{'}${p.property},jdbcType=${p.jdbcType}}
+            </if>
+</#if></#list>
+    </where>
+  </sql>
 </mapper>
