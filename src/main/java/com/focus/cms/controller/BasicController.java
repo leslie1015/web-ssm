@@ -1,5 +1,6 @@
 package com.focus.cms.controller;
 
+import com.focus.cms.annotation.ViewFolder;
 import com.focus.cms.entity.ActionResult;
 import com.focus.cms.enumerate.ResultCode;
 import java.util.List;
@@ -16,6 +17,15 @@ public class BasicController {
 
   @Autowired
   private HttpServletRequest request;
+
+  public String view(String viewName) {
+    Class clazz = this.getClass();
+    ViewFolder viewFolder = (ViewFolder)clazz.getAnnotation(ViewFolder.class);
+    if (null == viewFolder || StringUtils.isBlank(viewFolder.value())) {
+      return viewName;
+    }
+    return viewFolder.value() + "/" + viewName;
+  }
 
   public <T> ActionResult<T> actionResult(ResultCode code, T value){
     return  new ActionResult<T>(code.getCode(),

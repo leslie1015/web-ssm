@@ -1,6 +1,7 @@
 package com.focus.cms.controller;
 
 
+import com.focus.cms.annotation.ViewFolder;
 import com.focus.cms.entity.BasicParameter;
 import com.focus.cms.service.BasicParameterService;
 import javax.annotation.Resource;
@@ -9,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -19,10 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @author wangyong
  * @since 2019-07-04
  */
-//@RestController
-//@RequestMapping("/parameter")
 @Controller
 @RequestMapping("/parameter")
+@ViewFolder("parameter")
 public class BasicParameterController extends BasicController{
 
   @Resource
@@ -34,7 +33,9 @@ public class BasicParameterController extends BasicController{
     BasicParameter parameter = basicParameterService.getById(id);
 
     model.addAttribute("parameter",parameter);
-    return "index";
+
+    return view("index");
   }
+
 }
 
