@@ -1,0 +1,1 @@
+INSERT INTO cms.user_info (id, nickname, username, password, phone, email, address, admin_flag, STATUS, delete_flag, create_time, update_time, update_no, update_name, last_time, last_ip) VALUES (1, '管理员111', 'admin', '123456', '13866688888', 'wytest@163.com', '江苏省南京市', 1, 0, 0, '2020-05-31 10:18:48', '2020-05-31 10:18:51', '000001', 'admin', '2020-06-01 02:05:59', '10.90.1.198');

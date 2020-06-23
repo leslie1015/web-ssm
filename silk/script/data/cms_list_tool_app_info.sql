@@ -1,0 +1,1 @@
+INSERT INTO cms.list_tool_app_info (appCode, appName, shortName, gatewayUrl, appDesc) VALUES (1, '文章发布系统', '文章', null, null);

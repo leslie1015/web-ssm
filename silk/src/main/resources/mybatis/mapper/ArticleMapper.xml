@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leslie.silk.mapper.article.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.leslie.silk.entity.article.Article">
+    <id column="id" property="id" jdbcType="INTEGER"/>
+    <result column="article_title" property="articleTitle" jdbcType="VARCHAR"/>
+    <result column="sub_title" property="subTitle" jdbcType="VARCHAR"/>
+    <result column="type_id" property="typeId" jdbcType="INTEGER"/>
+    <result column="type_name" property="typeName" jdbcType="VARCHAR"/>
+    <result column="simple_intro" property="simpleIntro" jdbcType="VARCHAR"/>
+    <result column="content" property="content" jdbcType="VARCHAR"/>
+    <result column="title_color" property="titleColor" jdbcType="VARCHAR"/>
+    <result column="bold_flag" property="boldFlag" jdbcType="INTEGER"/>
+    <result column="top_flag" property="topFlag" jdbcType="INTEGER"/>
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER"/>
+    <result column="recommend_flag" property="recommendFlag" jdbcType="INTEGER"/>
+    <result column="ad_flag" property="adFlag" jdbcType="INTEGER"/>
+    <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+    <result column="status" property="status" jdbcType="INTEGER"/>
+    <result column="delete_no" property="deleteNo" jdbcType="VARCHAR"/>
+    <result column="delete_name" property="deleteName" jdbcType="VARCHAR"/>
+    <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP"/>
+    <result column="add_no" property="addNo" jdbcType="VARCHAR"/>
+    <result column="add_name" property="addName" jdbcType="VARCHAR"/>
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    <result column="update_no" property="updateNo" jdbcType="VARCHAR"/>
+    <result column="update_name" property="updateName" jdbcType="VARCHAR"/>
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+        id,article_title,sub_title,type_id,type_name,simple_intro,content,title_color,bold_flag,top_flag,
+        delete_flag,recommend_flag,ad_flag,keyword,status,delete_no,delete_name,delete_time,add_no,add_name,add_time,
+        update_no,update_name,update_time
+    </sql>
+
+  <sql id="cond">
+    <where>
+      <if test="id != null">
+        and  id =#{id,jdbcType=INTEGER}
+      </if>
+      <if test="articleTitle != null and articleTitle != ''">
+        and  article_title like CONCAT(CONCAT('%', #{articleTitle,jdbcType=VARCHAR}), '%')
+      </if>
+      <if test="subTitle != null and subTitle != ''">
+        and  sub_title like CONCAT(CONCAT('%', #{subTitle,jdbcType=VARCHAR}), '%')
+      </if>
+      <if test="typeId != null and typeId != ''">
+        and  type_id =#{typeId,jdbcType=INTEGER}
+      </if>
+      <if test="typeName != null and typeName != ''">
+        and  type_name =#{typeName,jdbcType=VARCHAR}
+      </if>
+      <if test="simpleIntro != null and simpleIntro != ''">
+        and  simple_intro =#{simpleIntro,jdbcType=VARCHAR}
+      </if>
+      <if test="content != null and content != ''">
+        and  content =#{content,jdbcType=VARCHAR}
+      </if>
+      <if test="titleColor != null and titleColor != ''">
+        and  title_color =#{titleColor,jdbcType=VARCHAR}
+      </if>
+      <if test="boldFlag != null">
+        and  bold_flag =#{boldFlag,jdbcType=INTEGER}
+      </if>
+      <if test="topFlag != null">
+        and  top_flag =#{topFlag,jdbcType=INTEGER}
+      </if>
+      <if test="deleteFlag != null">
+        and  delete_flag =#{deleteFlag,jdbcType=INTEGER}
+      </if>
+      <if test="adFlag != null">
+        and  ad_flag =#{adFlag,jdbcType=INTEGER}
+      </if>
+      <if test="recommendFlag != null">
+        and  recommend_flag =#{recommendFlag,jdbcType=INTEGER}
+      </if>
+      <if test="keyword != null and keyword != ''">
+        and  keyword =#{keyword,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        and  status =#{status,jdbcType=INTEGER}
+      </if>
+      <if test="deleteNo != null and deleteNo != ''">
+        and  delete_no =#{deleteNo,jdbcType=VARCHAR}
+      </if>
+      <if test="deleteName != null and deleteName != ''">
+        and  delete_name =#{deleteName,jdbcType=VARCHAR}
+      </if>
+      <if test="deleteTime != null">
+        and  delete_time =#{deleteTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="addNo != null and addNo != ''">
+        and  add_no =#{addNo,jdbcType=VARCHAR}
+      </if>
+      <if test="addName != null and addName != ''">
+        and  add_name =#{addName,jdbcType=VARCHAR}
+      </if>
+      <if test="addTime != null">
+        and  add_time =#{addTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateNo != null and updateNo != ''">
+        and  update_no =#{updateNo,jdbcType=VARCHAR}
+      </if>
+      <if test="updateName != null and updateName != ''">
+        and  update_name =#{updateName,jdbcType=VARCHAR}
+      </if>
+      <if test="updateTime != null">
+        and  update_time =#{updateTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+
+  <select id="list" parameterType="com.leslie.silk.entity.article.Article" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_article
+    <include refid="cond"/>
+  </select>
+
+
+  <select id="listByStatus"  resultMap="BaseResultMap">
+    select id, article_title
+    from t_article
+    where delete_flag = 0
+    and status = #{status, jdbcType=INTEGER}
+    and add_no = #{addNo, jdbcType=VARCHAR}
+    order by update_time desc
+  </select>
+
+
+
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_article
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKeySelective" parameterType="java.lang.String">
+        delete from t_article where ID = #{id,jdbcType=INTEGER}
+    </delete>
+
+  <insert id="insert" parameterType="com.leslie.silk.entity.article.Article">
+        insert into t_article (
+        id,article_title,sub_title,type_id,type_name,simple_intro,content,title_color,bold_flag,top_flag,
+        delete_flag,recommend_flag,ad_flag,keyword,status,delete_no,delete_name,delete_time,add_no,add_name,add_time,
+        update_no,update_name,update_time
+        )
+        values (
+         #{id,jdbcType=INTEGER},#{articleTitle,jdbcType=VARCHAR},#{subTitle,jdbcType=VARCHAR},#{typeId,jdbcType=INTEGER},#{typeName,jdbcType=VARCHAR},
+         #{simpleIntro,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{titleColor,jdbcType=VARCHAR},#{boldFlag,jdbcType=INTEGER},#{topFlag,jdbcType=INTEGER},
+         #{deleteFlag,jdbcType=INTEGER},#{recommendFlag,jdbcType=INTEGER},#{adFlag,jdbcType=INTEGER},#{keyword,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{deleteNo,jdbcType=VARCHAR},
+         #{deleteName,jdbcType=VARCHAR},#{deleteTime,jdbcType=TIMESTAMP},#{addNo,jdbcType=VARCHAR},#{addName,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},
+         #{updateNo,jdbcType=VARCHAR},#{updateName,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+  <select id="listForHome" parameterType="com.leslie.silk.entity.article.Article" resultMap="BaseResultMap">
+    select
+    id, article_title, add_time
+    from t_article
+    <include refid="cond"/>
+  </select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.leslie.silk.entity.article.Article">
+    update t_article
+    <set>
+      <if test="articleTitle != null">
+        article_title =#{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null">
+        sub_title =#{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        type_id =#{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="typeName != null">
+        type_name =#{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleIntro != null">
+        simple_intro =#{simpleIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content =#{content,jdbcType=VARCHAR},
+      </if>
+      <if test="titleColor != null">
+        title_color =#{titleColor,jdbcType=VARCHAR},
+      </if>
+      <if test="boldFlag != null">
+        bold_flag =#{boldFlag,jdbcType=INTEGER},
+      </if>
+      <if test="topFlag != null">
+        top_flag =#{topFlag,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null">
+        delete_flag =#{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="recommendFlag != null">
+        recommend_flag =#{recommendFlag,jdbcType=INTEGER},
+      </if>
+      <if test="adFlag != null">
+        ad_flag =#{adFlag,jdbcType=INTEGER},
+      </if>
+      <if test="keyword != null">
+        keyword =#{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status =#{status,jdbcType=INTEGER},
+      </if>
+      <if test="deleteNo != null">
+        delete_no =#{deleteNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteName != null">
+        delete_name =#{deleteName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        delete_time =#{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addNo != null">
+        add_no =#{addNo,jdbcType=VARCHAR},
+      </if>
+      <if test="addName != null">
+        add_name =#{addName,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time =#{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateNo != null">
+        update_no =#{updateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        update_name =#{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time =#{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID =  #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

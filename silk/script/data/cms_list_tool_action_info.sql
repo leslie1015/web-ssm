@@ -1,0 +1,1 @@
+INSERT INTO cms.list_tool_action_info (resource_Id, button_tag, show_name, button_style, click_function, order_num, request_type) VALUES (100002, 'a', '审核', 'info', '/articleAction.html?action=audit&id=[pk]', 1, 1);
